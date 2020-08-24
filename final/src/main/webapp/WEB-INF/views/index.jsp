@@ -150,9 +150,7 @@ ul,li{list-style:none;}
 </style>
 </head>
 <body>
-   <c:if test="${kakaoinfo==0}">
-      <jsp:include page="user/mypage/kakaolightbox.jsp" />
-   </c:if>
+
    <jsp:include page="floatmenu.jsp" />
    <jsp:include page="sidebar.jsp" />
    <button type="button" name="button" class="ac-sub-go-top"

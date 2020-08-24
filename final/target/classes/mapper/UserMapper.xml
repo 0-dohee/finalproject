@@ -30,7 +30,7 @@
     	select * from tbl_user where u_id=#{u_id} and u_k_id=#{u_k_id}
     </select>
     <select id="readkakao" resultType="string">
-    	select u_k_id from tbl_user where u_k_id=#{u_k_id}
+    	select count(*) from tbl_user where u_k_id=#{param1} and u_id=#{param2}
     </select>
     <select id="loginread" resultType="com.example.domain.UserVO">
     	select * from tbl_user where u_id=#{u_id} and u_status=0

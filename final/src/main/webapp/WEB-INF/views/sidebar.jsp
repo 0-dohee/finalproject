@@ -161,8 +161,15 @@
 	<aside class="sidebar">
 		<div class="sidebar-content">
 			<h1>CART</h1>
+			<div style="margin-top:60px; width:313px; margin-left:10px; border-top:3px solid gray; 
+			border-bottom:3px solid gray; padding-top:20px; padding-bottom:20px;">
+				<span style="font-size:25px; font-weight:bold;">${c_name }</span><br>
+				<span style="font-size:20Spx;">${r_title }</span><span style="font-size:13px;">(<span>${r_roomnum }</span>호)</span><br>
+	            <span style="display:inline-block; text-align:right; padding-left:10px; width:100%; font-size:25px;">${r_price }</span><br>
+	            <input type="button" value="결제하기" style="margin-top:750px; width:100%; height:40px; background:#efefef; outline:none; border:none; cursor:pointer;
+	            border-radius:5px;">
+			</div>
 		</div>
-		
 	</aside>
 	
 <!-- 	마이페이지 -->

@@ -101,7 +101,10 @@ table {
 .cart {
 	width:80px;
 	height:40px;
-	
+	border:none;
+	border-radius:5px;
+	outline:none;
+	cursor:pointer;
 }
 </style>
 <body>
@@ -115,12 +118,12 @@ table {
 				<table id="tbl" style="border-top:3px solid #0f4c81; border-bottom:3px solid #0f4c81;"></table>
 				<script id="temp" type="text/x-handlebars-template">
 				{{#each .}}
-				<tr>
+				<tr class="row">
 					<td rowspan=2 height=560><img src="/company/hoteldisplay?fileName={{c_image}}" id="image" width=500></td>
 					<td width=700 style="padding-left:30px; height:300px; padding-bottom:70px;">
 						<span style="display:inline-block; margin-bottom:20px; color:gray;">평점</span>
 						<span style="visibility:hidden;">{{c_grade}}</span><br>
-						<span style="font-size:30px; font-weight:bold; font-family:'맑은 고딕'; display:inline-block; margin-bottom:10px;">{{c_name}}</span><br>
+						<span style="font-size:30px; font-weight:bold; font-family:'맑은 고딕'; display:inline-block; margin-bottom:10px;" class="c_name">{{c_name}}</span><br>
 						<span style="display:inline-block; margin-bottom:10px; color:gray;">{{c_address}}</span><br>
 						<span style="color:gray;">{{c_tel}}</span><br>
 					</td>
@@ -159,9 +162,9 @@ table {
 				</tr>
 				{{#each .}}
 				<tr class="row" style="border-bottom:0.5px solid #e9e9e9; cursor:pointer;">
-					<td style="padding-left:15px; height:80px;"><span style="font-size:20px;">{{r_title}}</span> <span style="font-size:13px; color:gray;">(<span class="roomnum">{{r_roomnum}}</span>호)</span></td>
-					<td style="text-align:center;">{{r_persons}}</td>
-					<td style="text-align:right; padding-right:15px;">{{r_price}} 원</td>
+					<td style="padding-left:15px; height:80px;"><span style="font-size:20px;" class="r_title">{{r_title}}</span> <span style="font-size:13px; color:gray;">(<span class="roomnum r_roomnum">{{r_roomnum}}</span>호)</span></td>
+					<td style="text-align:center;" class="r_persons">{{r_persons}}</td>
+					<td style="text-align:right; padding-right:15px;" class="r_price">{{r_price}} 원</td>
 					<td style="text-align:center;"><input type="button" value="담기" class="cart"></td>
 					<td style="visibility:hidden;">{{r_grade}}</td>
 				</tr>
@@ -338,6 +341,7 @@ $(":checkbox").css("display","none");
 $("#darken-background").hide();
 $("input:checkbox[name='r_o_option1']").prop("checked", false);
 
+// 장바구니
 	$("#tbl1").on("click", ".row .cart", function() {
 	   if(!confirm("장바구니에 담으시겠습니까?"))return;
 	   var row=$(this).parent().parent();

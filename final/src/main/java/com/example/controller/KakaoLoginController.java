@@ -82,8 +82,9 @@ public class KakaoLoginController {
 	        vo.setU_address("");
 	        vo.setU_key("Y");
 	        vo.setU_status("0");
-	        String vo1=mapper.readkakao(id);
-	        if(vo1==null) {
+	        String vo1=mapper.readkakao(id,"0");
+	        System.out.println(vo1);
+	        if(vo1!="1") {
 	        	mapper.insertKakao(vo);
 	        	session.setAttribute("kakaoinfo", "0");
 	        }
