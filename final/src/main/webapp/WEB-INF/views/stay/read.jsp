@@ -98,6 +98,11 @@
 table {
 	border-collapse:collapse;
 }
+.cart {
+	width:80px;
+	height:40px;
+	
+}
 </style>
 <body>
 	<jsp:include page="../floatmenu.jsp"/>
