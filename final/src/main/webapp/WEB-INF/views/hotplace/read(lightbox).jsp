@@ -524,6 +524,7 @@
 				var no = 0;
 				for (var i = 0; i < positions.length; i++) {
 					no = i;
+					alert(no);
 					// 마커를 생성합니다
 						var marker = new kakao.maps.Marker({
 						map : map, // 마커를 표시할 지도
@@ -550,23 +551,27 @@
 					      // 마커 위에 인포윈도우를 표시합니다
 						location.href = "/stay/read?c_id=" + positions[no].c_id;
 					});
+					
+					
+					// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+					function makeOverListener(map, marker, infowindow) {
+						return function() {
+							infowindow.open(map, marker);
+						};
+					}
+
+					// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+					function makeOutListener(infowindow) {
+						return function() {
+							infowindow.close();
+						};
+					}
+					
 				}
 				
 				
 
-				// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-				function makeOverListener(map, marker, infowindow) {
-					return function() {
-						infowindow.open(map, marker);
-					};
-				}
-
-				// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-				function makeOutListener(infowindow) {
-					return function() {
-						infowindow.close();
-					};
-				}
+				
 			}
 		});
 		
