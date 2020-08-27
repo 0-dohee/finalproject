@@ -348,7 +348,7 @@ $("input:checkbox[name='r_o_option1']").prop("checked", false);
 // 장바구니
 	$("#tbl1").on("click", ".row .cart", function(e) {
 		e.stopPropagation();
-		if (!confirm("장바구니에 담으시겠습니까?"))return;
+		if (!confirm("장바구니에 담으시겠습니까??"))return;
 		var row = $(this).parent().parent();
 		var c_name = $("#tbl .row").find(".c_name").html();
 		var r_title = row.find(".r_title").html();
