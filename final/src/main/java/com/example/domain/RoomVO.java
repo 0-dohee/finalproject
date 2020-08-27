@@ -2,7 +2,7 @@ package com.example.domain;
 
 import java.util.List;
 
-public class RoomVO {
+public class RoomVO{
 	private String r_id;
 	private String r_roomnum;
 	private String r_title;

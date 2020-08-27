@@ -1,13 +1,8 @@
 package com.example.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -68,7 +63,7 @@ public JsonNode getAccessToken(String autorize_code) {
  
         postParams.add(new BasicNameValuePair("client_id", "44c4398b724d06191dbaf99c087795b1"));
  
-        postParams.add(new BasicNameValuePair("redirect_uri", "http://192.169.0.194:8088/oauth")); //예 : http://아이피:포트/최상위폴더/리다이렉션경로
+        postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8088/oauth")); //예 : http://아이피:포트/최상위폴더/리다이렉션경로
  
         postParams.add(new BasicNameValuePair("code", autorize_code));
         //기타 설명은 생략 자세히 알고 싶으면 구글링하세요.

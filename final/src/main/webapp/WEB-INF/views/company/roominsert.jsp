@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<link rel="shortcut icon" type="image⁄x-icon" href="/resources/img/title_logo.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 <title>여행의 설렘 TOURSUM !</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style.css" />
@@ -206,6 +207,13 @@ table td {
 #pagination .active a {
 	font-size:30px;
 }
+
+#go_list {
+	position:absolute;
+	top:21px;
+	left:230px;
+	cursor:pointer;
+}
 </style>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
@@ -220,7 +228,7 @@ table td {
 		<div id="container">
 			<div id="roominsert_area">
 			<div style="height:60px; margin-top:20px;"><img src="/resources/img/company/roominsert_title.png"/></div>
-			<div><button id="go_list">객실정보 보기</button></div>
+			<div><button id="go_list">나의 객실 정보</button></div>
 			<form name="frm" action="insertroom" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 				<table id="tbl_roominsert">
 					<tr style="height:70px;">
@@ -544,6 +552,12 @@ $("#star2").hide();$("#star4").hide();$("#star6").hide();$("#star8").hide();$("#
 $(":checkbox").css("display","none");
 $("#darken-background").hide();
 $("input:checkbox[name='r_o_option1']").prop("checked", false);
+
+$("#go_list").on("click", function(){
+	$("html").animate({
+		scrollTop: 1160
+	}, 600);
+});
 
 $("input[name=r_o_option]").on("click",function(){
 	var tag1=$(this).parent().find("#tag1");

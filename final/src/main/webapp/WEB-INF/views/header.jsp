@@ -21,10 +21,10 @@
 				<a href="/user/logout">로그아웃</a>
 		</c:if>
 		<c:if test="${u_k_id!=null && u_id=='0'}">
-			<a href="https://kauth.kakao.com/oauth/logout?client_id=44c4398b724d06191dbaf99c087795b1&logout_redirect_uri=http://192.168.0.194:8088/user/login">로그아웃</a>
+			<a href="https://kauth.kakao.com/oauth/logout?client_id=44c4398b724d06191dbaf99c087795b1&logout_redirect_uri=http://localhost:8088/user/login">로그아웃</a>
 		</c:if>
 	</div>
-	<a href="/"><img src="${pageContext.request.contextPath}/resources/img/logo.png" width=300 id="header_logo"></a>
+	<a href="/"><img src="${pageContext.request.contextPath}/resources/img/logo3.png" width=300 id="header_logo"></a>
 </body>
 <script>
 </script>

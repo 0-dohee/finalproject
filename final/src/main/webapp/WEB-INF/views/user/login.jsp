@@ -296,7 +296,7 @@ input[id="login-chk2"]:checked + label em {
 				<div id="div_other_login">
 					<!-- <img src="/kakao_login_large_narrow.png" width="50"> -->
 					<img src="/resources/img/user/kakao_icon.png" width=30 id="kakaoimg"/>
-					<a id="kakao" href="https://kauth.kakao.com/oauth/authorize?client_id=44c4398b724d06191dbaf99c087795b1&redirect_uri=http://192.168.0.194:8088/oauth&response_type=code">
+					<a id="kakao" href="https://kauth.kakao.com/oauth/authorize?client_id=44c4398b724d06191dbaf99c087795b1&redirect_uri=http://localhost:8088/oauth&response_type=code">
 					카카오 로그인</a>
 				</div>
 			</div>

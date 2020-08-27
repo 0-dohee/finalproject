@@ -257,29 +257,38 @@
 		discountsum.val("성인 " + people + " 청소년 " + child);
 		$(".aircount1").hide();
 	});
+	
+	//결제하기
 	$("#discount").on(
 			"click",
 			".row .paybtn",
 			function() {
 				var row = $(this).parent().parent();
 				var a_number = row.find(".a_number").html();
-				var sum = parseInt(people) + parseInt(child);
+				var peoples = row.find(".a_emptyseat").html();
+				//	             var sum = parseInt(people) + parseInt(child);
+				//	             var sum = parseInt($(".people").val()) + parseInt($(".child").val());
+				var sum1 = discountsum.val();
+				
+				var beforeSum = sum1;
+// 				var afterSum = beforeSum.split(',');
+// 				alert(afterSum[0] + afterSum[1]);
+// 				var sum = parseInt(afterSum[0]) + parseInt(afterSum[1]);
+				var sum = parseInt(row.next().next().find(".people").val()) + parseInt(row.next().next().find(".child").val());
 				var a_emptyseat = row.find(".a_emptyseat").html();
 				var price = row.find(".a_price").html();
 				alert(a_number + sum + a_emptyseat + price);
 				var fullStr = price;
-				var sliceStr = fullStr.slice(0,-1);
+				var sliceStr = fullStr.slice(0, -1);
 				var beforeAdd = sliceStr;
 				var afterAdd = beforeAdd.split(',');
-				var price1=afterAdd[0]+afterAdd[1];
+				var price1 = afterAdd[0] + afterAdd[1];
 				if (a_emptyseat < sum) {
 					alert("예약 인원이 너무 많습니다");
 				} else {
 					location.href = "/air/bookingPeople?a_number=" + a_number
 							+ "&sum=" + sum + "&price=" + price1;
-					
-					
-				
+
 				}
 			});
 </script>

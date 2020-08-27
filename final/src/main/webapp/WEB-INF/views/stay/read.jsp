@@ -98,6 +98,14 @@
 table {
 	border-collapse:collapse;
 }
+.cart {
+	width:80px;
+	height:40px;
+	border:none;
+	border-radius:5px;
+	outline:none;
+	cursor:pointer;
+}
 </style>
 <body>
 	<jsp:include page="../floatmenu.jsp"/>
@@ -110,12 +118,12 @@ table {
 				<table id="tbl" style="border-top:3px solid #0f4c81; border-bottom:3px solid #0f4c81;"></table>
 				<script id="temp" type="text/x-handlebars-template">
 				{{#each .}}
-				<tr>
+				<tr class="row">
 					<td rowspan=2 height=560><img src="/company/hoteldisplay?fileName={{c_image}}" id="image" width=500></td>
 					<td width=700 style="padding-left:30px; height:300px; padding-bottom:70px;">
 						<span style="display:inline-block; margin-bottom:20px; color:gray;">평점</span>
 						<span style="visibility:hidden;">{{c_grade}}</span><br>
-						<span style="font-size:30px; font-weight:bold; font-family:'맑은 고딕'; display:inline-block; margin-bottom:10px;">{{c_name}}</span><br>
+						<span style="font-size:30px; font-weight:bold; font-family:'맑은 고딕'; display:inline-block; margin-bottom:10px;" class="c_name">{{c_name}}</span><br>
 						<span style="display:inline-block; margin-bottom:10px; color:gray;">{{c_address}}</span><br>
 						<span style="color:gray;">{{c_tel}}</span><br>
 					</td>
@@ -154,11 +162,15 @@ table {
 				</tr>
 				{{#each .}}
 				<tr class="row" style="border-bottom:0.5px solid #e9e9e9; cursor:pointer;">
-					<td style="padding-left:15px; height:80px;"><span style="font-size:20px;">{{r_title}}</span> <span style="font-size:13px; color:gray;">(<span class="roomnum">{{r_roomnum}}</span>호)</span></td>
-					<td style="text-align:center;">{{r_persons}}</td>
-					<td style="text-align:right; padding-right:15px;">{{r_price}} 원</td>
+					<td style="padding-left:15px; height:80px;"><span style="font-size:20px;" class="r_title">{{r_title}}</span> <span style="font-size:13px; color:gray;">(<span class="roomnum r_roomnum">{{r_roomnum}}</span>호)</span></td>
+					<td style="text-align:center;" class="r_persons">{{r_persons}}</td>
+					<td style="text-align:right; padding-right:15px;"><span class="r_price">{{r_price}}</span> 원</td>
 					<td style="text-align:center;"><input type="button" value="담기" class="cart"></td>
-					<td style="visibility:hidden;">{{r_grade}}</td>
+					<td style="visibility:hidden;">
+						{{r_grade}}
+						<input type="hidden" value="{{r_id}}" class="r_id">
+						<input type="hidden" value="{{r_image}}" class="r_image">
+					</td>
 				</tr>
 				{{/each}} 
 				</script>
@@ -333,159 +345,235 @@ $(":checkbox").css("display","none");
 $("#darken-background").hide();
 $("input:checkbox[name='r_o_option1']").prop("checked", false);
 
-	$("#tbl1").on("click", ".row .cart", function() {
-	   if(!confirm("장바구니에 담으시겠습니까?"))return;
-	   var row=$(this).parent().parent();
-	   var c_name=$("#tbl .row").find(".c_name").html();
-	   var r_title=row.find(".r_title").html();
-	   var r_roomnum=row.find(".r_roomnum").html();
-	   var r_price=row.find(".r_price").html();
-	   //alert(c_name);
-	   location.href="/sidebar?r_title="+r_title+"&r_roomnum="+r_roomnum+"&r_price="+r_price+"&c_name="+c_name+"&c_id="+c_id;
+// 장바구니
+	$("#tbl1").on("click", ".row .cart", function(e) {
+		e.stopPropagation();
+		if (!confirm("장바구니에 담으시겠습니까?"))return;
+		var row = $(this).parent().parent();
+		var c_name = $("#tbl .row").find(".c_name").html();
+		var r_title = row.find(".r_title").html();
+		var r_roomnum = row.find(".r_roomnum").html();
+		var r_price = row.find(".r_price").html();
+		var r_id = row.find(".r_id").val();
+		var r_image = row.find(".r_image").val();
+		//alert(c_name);
+		alert(r_id + c_name + r_title + r_roomnum + r_price + r_image);
+		$.ajax({
+			type : "get",
+			url : "/sidebar",
+			data : {
+				"r_id" : r_id,
+				"c_name" : c_name,
+				"r_title" : r_title,
+				"r_roomnum" : r_roomnum,
+				"r_price" : r_price,
+				"r_image" : r_image
+			},
+			success : function() {
+				
+			}
+		});
 	});
 
-$("input[name=r_o_option1]").on("click",function(){
-	var tag1=$(this).parent().find("#tag1");
-	var tag2=$(this).parent().find("#tag1-1");
-	
-	if($(this).is(":checked")==true){
-		tag1.css("display","none");
-		tag2.css("display","inline-block");
-	}else{
-		tag1.css("display","inline-block");
-		tag2.css("display","none");
-	}
-});
+	$("input[name=r_o_option1]").on("click", function() {
+		var tag1 = $(this).parent().find("#tag1");
+		var tag2 = $(this).parent().find("#tag1-1");
 
-
-
-$("#tbl1").on("click", ".row", function() {
-	$("#darken-background").css("display", "block"); //팝업 뒷배경 display block
-	$("#lightbox").css("display", "block"); //팝업창 display block
-	$("body").css("overflow", "hidden");//body 스크롤바 없애기
-
-});
-$("#btnClose").on("click", function(event) {
-	$("#darken-background").css("display", "none"); //팝업창 뒷배경 display none
-	$("#lightbox").css("display", "none"); //팝업창 display none
-	$("body").css("overflow", "auto");//body 스크롤바 생성
-});
-
-
-$.ajax({
-	type:"post",
-	url:"/stay/read",
-	data:{"c_id":c_id},
-	success:function(data){
-		var c_grade="${c_grade}";
-		var temp=Handlebars.compile($("#temp").html());
-		 $("#tbl").html(temp(data));
-		 
-		 if(c_grade==0) {
-			 $("#star21").show();
-		 }else if(0<c_grade && c_grade<=0.5) {
-			 $("#star22").show();
-		 }else if(0.5<c_grade && c_grade<=1) {
-			 $("#star23").show();
-		 }else if(1<c_grade && c_grade<=1.5) {
-			 $("#star24").show();
-		 }else if(1.5<c_grade && c_grade<=2) {
-			 $("#star25").show();
-		 }else if(2<c_grade && c_grade<=2.5) {
-			 $("#star26").show();
-		 }else if(2.5<c_grade && c_grade<=3) {
-			 $("#star27").show();
-		 }else if(3<c_grade && c_grade<=3.5) {
-			 $("#star28").show();
-		 }else if(3.5<c_grade && c_grade<=4) {
-			 $("#star29").show();
-		 }else if(4<c_grade && c_grade<=4.5) {
-			 $("#star210").show();
-		 }else if(4.5<c_grade && c_grade<=5) {
-			 $("#star211").show();
-		 }
-	}
-});
-
-$("#tbl1").on("click", ".row", function() {
-	$("input[name=r_o_option1]").prop("checked",false);
-	$("input[name=r_o_option1]").parent().find("#tag1").css("display","inline-block");
-	$("input[name=r_o_option1]").parent().find("#tag1-1").css("display","none");
-
-	$("#star1").hide();$("#star3").hide();$("#star5").hide();$("#star7").hide();$("#star9").hide();
-	$("#star2").hide();$("#star4").hide();$("#star6").hide();$("#star8").hide();$("#star10").hide();$("#star11").hide();
-	var r_i_roomnum=$(this).find(".roomnum").html();
-	var r_i_id="${c_id}";
-	$.ajax({
-		type:"get",
-		url:"/company/getroomread",
-		data:{"r_i_id":r_i_id,"r_i_roomnum":r_i_roomnum},
-		success:function(data){
-			var temp=Handlebars.compile($("#temp3").html());
-			 $("#images").html(temp(data));
-			 $("#roomnum1").html(data.read.r_roomnum);
-			 $("#title1").html(data.read.r_title);
-			 $("#persons1").html(data.read.r_persons);
-			 $("#price1").html(data.read.r_price);
-			 $("#roomnum1").html(data.read.r_roomnum);
-			 $("#detail1").html(data.read.r_detail);
-			 $("#repimage").attr("src", "/displayRoom?fileName="+data.read.r_image);
-			 if(data.read.r_grade==0){
-				 $("#star1").show();
-			 }else if(0<data.read.r_grade && data.read.r_grade<=0.5){
-				 $("#star2").show();
-			 }else if(0.5<data.read.r_grade && data.read.r_grade<=1){
-				 $("#star3").show();
-			 }else if(1<data.read.r_grade && data.read.r_grade<=1.5){
-				 $("#star4").show();
-			 }else if(1.5<data.read.r_grade && data.read.r_grade<=2){
-				 $("#star5").show();
-			 }else if(2<data.read.r_grade && data.read.r_grade<=2.5){
-				 $("#star6").show();
-			 }else if(2.5<data.read.r_grade && data.read.r_grade<=3){
-				 $("#star7").show();
-			 }else if(3<data.read.r_grade && data.read.r_grade<=3.5){
-				 $("#star8").show();
-			 }else if(3.5<data.read.r_grade && data.read.r_grade<=4){
-				 $("#star9").show();
-			 }else if(4<data.read.r_grade && data.read.r_grade<=4.5){
-				 $("#star10").show();
-			 }else if(4.5<data.read.r_grade && data.read.r_grade<=5){
-				 $("#star11").show();
-			 }
-			//룸 옵션 읽기	
-				var option1=[];
-				    $.each(data.option, function(index, option){
-					  	option1.push(option.r_o_option);
-				   });
-				    $("input[name=r_o_option1]").each(function(index, item){
-				    	for(var i=0; i<option1.length; i++){
-					    	if($(this).val()==option1[i]){
-					    		var tag1=$(this).parent().find("#tag1");
-								var tag2=$(this).parent().find("#tag1-1");
-								
-								tag1.css("display","none");
-								tag2.css("display","inline-block");
-					    		$(this).prop("checked",true);
-					    	}
-				    	}
-				    });
+		if ($(this).is(":checked") == true) {
+			tag1.css("display", "none");
+			tag2.css("display", "inline-block");
+		} else {
+			tag1.css("display", "inline-block");
+			tag2.css("display", "none");
 		}
 	});
-});
 
-function roomlist(){
-    $.ajax({
-       type:"get",
-       url:"/company/roomlist",
-       data:{"c_id":c_id},
-       dataType:"json",
-       success:function(data){
-          var template = Handlebars.compile($("#temp1").html());
-             $("#tbl1").html(template(data));
-       }
-    });
- }
+	$("#tbl1").on("click", ".row", function() {
+		$("#darken-background").css("display", "block"); //팝업 뒷배경 display block
+		$("#lightbox").css("display", "block"); //팝업창 display block
+		$("body").css("overflow", "hidden");//body 스크롤바 없애기
 
+	});
+	$("#btnClose").on("click", function(event) {
+		$("#darken-background").css("display", "none"); //팝업창 뒷배경 display none
+		$("#lightbox").css("display", "none"); //팝업창 display none
+		$("body").css("overflow", "auto");//body 스크롤바 생성
+	});
+
+	$.ajax({
+		type : "post",
+		url : "/stay/read",
+		data : {
+			"c_id" : c_id
+		},
+		success : function(data) {
+			var c_grade = "${c_grade}";
+			var temp = Handlebars.compile($("#temp").html());
+			$("#tbl").html(temp(data));
+
+			if (c_grade == 0) {
+				$("#star21").show();
+			} else if (0 < c_grade && c_grade <= 0.5) {
+				$("#star22").show();
+			} else if (0.5 < c_grade && c_grade <= 1) {
+				$("#star23").show();
+			} else if (1 < c_grade && c_grade <= 1.5) {
+				$("#star24").show();
+			} else if (1.5 < c_grade && c_grade <= 2) {
+				$("#star25").show();
+			} else if (2 < c_grade && c_grade <= 2.5) {
+				$("#star26").show();
+			} else if (2.5 < c_grade && c_grade <= 3) {
+				$("#star27").show();
+			} else if (3 < c_grade && c_grade <= 3.5) {
+				$("#star28").show();
+			} else if (3.5 < c_grade && c_grade <= 4) {
+				$("#star29").show();
+			} else if (4 < c_grade && c_grade <= 4.5) {
+				$("#star210").show();
+			} else if (4.5 < c_grade && c_grade <= 5) {
+				$("#star211").show();
+			}
+		}
+	});
+
+	$("#tbl1")
+			.on(
+					"click",
+					".row",
+					function() {
+						$("input[name=r_o_option1]").prop("checked", false);
+						$("input[name=r_o_option1]").parent().find("#tag1")
+								.css("display", "inline-block");
+						$("input[name=r_o_option1]").parent().find("#tag1-1")
+								.css("display", "none");
+
+						$("#star1").hide();
+						$("#star3").hide();
+						$("#star5").hide();
+						$("#star7").hide();
+						$("#star9").hide();
+						$("#star2").hide();
+						$("#star4").hide();
+						$("#star6").hide();
+						$("#star8").hide();
+						$("#star10").hide();
+						$("#star11").hide();
+						var r_i_roomnum = $(this).find(".roomnum").html();
+						var r_i_id = "${c_id}";
+						$
+								.ajax({
+									type : "get",
+									url : "/company/getroomread",
+									data : {
+										"r_i_id" : r_i_id,
+										"r_i_roomnum" : r_i_roomnum
+									},
+									success : function(data) {
+										var temp = Handlebars.compile($(
+												"#temp3").html());
+										$("#images").html(temp(data));
+										$("#roomnum1")
+												.html(data.read.r_roomnum);
+										$("#title1").html(data.read.r_title);
+										$("#persons1")
+												.html(data.read.r_persons);
+										$("#price1").html(data.read.r_price);
+										$("#roomnum1")
+												.html(data.read.r_roomnum);
+										$("#detail1").html(data.read.r_detail);
+										$("#repimage").attr(
+												"src",
+												"/displayRoom?fileName="
+														+ data.read.r_image);
+										if (data.read.r_grade == 0) {
+											$("#star1").show();
+										} else if (0 < data.read.r_grade
+												&& data.read.r_grade <= 0.5) {
+											$("#star2").show();
+										} else if (0.5 < data.read.r_grade
+												&& data.read.r_grade <= 1) {
+											$("#star3").show();
+										} else if (1 < data.read.r_grade
+												&& data.read.r_grade <= 1.5) {
+											$("#star4").show();
+										} else if (1.5 < data.read.r_grade
+												&& data.read.r_grade <= 2) {
+											$("#star5").show();
+										} else if (2 < data.read.r_grade
+												&& data.read.r_grade <= 2.5) {
+											$("#star6").show();
+										} else if (2.5 < data.read.r_grade
+												&& data.read.r_grade <= 3) {
+											$("#star7").show();
+										} else if (3 < data.read.r_grade
+												&& data.read.r_grade <= 3.5) {
+											$("#star8").show();
+										} else if (3.5 < data.read.r_grade
+												&& data.read.r_grade <= 4) {
+											$("#star9").show();
+										} else if (4 < data.read.r_grade
+												&& data.read.r_grade <= 4.5) {
+											$("#star10").show();
+										} else if (4.5 < data.read.r_grade
+												&& data.read.r_grade <= 5) {
+											$("#star11").show();
+										}
+										//룸 옵션 읽기	
+										var option1 = [];
+										$.each(data.option, function(index,
+												option) {
+											option1.push(option.r_o_option);
+										});
+										$("input[name=r_o_option1]")
+												.each(
+														function(index, item) {
+															for (var i = 0; i < option1.length; i++) {
+																if ($(this)
+																		.val() == option1[i]) {
+																	var tag1 = $(
+																			this)
+																			.parent()
+																			.find(
+																					"#tag1");
+																	var tag2 = $(
+																			this)
+																			.parent()
+																			.find(
+																					"#tag1-1");
+
+																	tag1
+																			.css(
+																					"display",
+																					"none");
+																	tag2
+																			.css(
+																					"display",
+																					"inline-block");
+																	$(this)
+																			.prop(
+																					"checked",
+																					true);
+																}
+															}
+														});
+									}
+								});
+					});
+
+	function roomlist() {
+		$.ajax({
+			type : "get",
+			url : "/company/roomlist",
+			data : {
+				"c_id" : c_id
+			},
+			dataType : "json",
+			success : function(data) {
+				var template = Handlebars.compile($("#temp1").html());
+				$("#tbl1").html(template(data));
+			}
+		});
+	}
 </script>
 </html>

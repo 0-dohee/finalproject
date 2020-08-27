@@ -33,7 +33,7 @@ public interface UserMapper {
 	public UserVO kakaoread(String u_id, String u_k_id);
 	public List<UserTagVO> readtag(String t_id);
 	public String readid(String u_id,String u_k_id);
-	public String readkakao(String u_k_id);
+	public String readkakao(String u_k_id,String u_id);
 	//업체 읽어오기
 	public CompanyVO readCompany(String c_id);
 	public List<CompanyOptionVO> readOption(String c_id);

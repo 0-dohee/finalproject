@@ -43,15 +43,27 @@ public class CompanyConroller {
 	CompanyService service;
 		
    @RequestMapping("/sidebar")
-   public String cart(HttpSession session,String r_title,String r_roomnum,String r_price,String c_name,String c_id) {
-      //System.out.println(r_title+r_roomnum+r_price);
-      String u_id=(String) session.getAttribute("u_id");
-      String u_k_id=(String) session.getAttribute("u_k_id");
-      session.setAttribute("r_title", r_title);
-      session.setAttribute("r_roomnum", r_roomnum);
-      session.setAttribute("r_price", r_price);
-      session.setAttribute("c_name", c_name);
-      return "redirect:/stay/read?c_id="+c_id;
+   @ResponseBody
+   public void cart(HttpSession session,CompanyVO vo) {
+	   System.out.println("sidebar"+vo.toString());
+	   ArrayList<CompanyVO> listCart=(ArrayList<CompanyVO>)session.getAttribute("listCart");
+	   System.out.println(listCart);
+		if(listCart==null) {
+			listCart=new ArrayList<CompanyVO>();
+			listCart.add(vo);
+		}else {
+			
+			boolean find=false;
+			for(CompanyVO nvo:listCart) {
+				if(nvo.getR_id().equals(vo.getR_id()) && nvo.getR_roomnum().equals(vo.getR_roomnum())) {
+					find=true;
+				}
+			}
+			if(find==false) {
+				listCart.add(vo);
+			}
+		}
+		session.setAttribute("listCart", listCart);
    }
 	
 	@RequestMapping("/company/getroomread")
@@ -89,7 +101,6 @@ public class CompanyConroller {
 	//·ëµî·Ï
 		@RequestMapping(value="/company/insertroom",method=RequestMethod.POST)
 		public String insertComapny(RoomVO vo,MultipartHttpServletRequest multi,HttpServletRequest request) throws Exception {
-			System.out.println(vo.toString());
 			String[] arrayParam = request.getParameterValues("r_o_option");
 			
 				
@@ -116,10 +127,8 @@ public class CompanyConroller {
 				service.insert(vo);		
 				
 				for (int i = 0; i < arrayParam.length; i++) { 
-					System.out.println(arrayParam[i]); 
 					mapper.insertRoomoption(vo.getR_id(),vo.getR_roomnum(),arrayParam[i]);
 					}
-				System.out.println(vo.getR_id());
 			return "redirect:/company/roominsert?page=1&&c_id="+vo.getR_id();
 		}
 		@RequestMapping("/displayRoom")
@@ -168,7 +177,6 @@ public class CompanyConroller {
 	   @ResponseBody
 	   public List<RoomVO> roomlist(String c_id) {
 	      List<RoomVO> roomlist=mapper.companyroomlist(c_id);
-	      System.out.println(roomlist);
 	      return roomlist;
 	   }
 	   

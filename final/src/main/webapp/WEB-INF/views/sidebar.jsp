@@ -151,6 +151,7 @@
 	margin-left: 15px;
 	margin-top: 10px;
 }
+
 </style>
 </head>
 <body>
@@ -161,8 +162,26 @@
 	<aside class="sidebar">
 		<div class="sidebar-content">
 			<h1>CART</h1>
+			<div style="margin-top:60px; width:313px; margin-left:10px; border-top:3px solid gray; 
+				border-bottom:3px solid gray; padding-top:20px; padding-bottom:20px; position:relative; height:850px;">
+				<c:forEach items="${listCart }" var="cvo">
+					<table style="border-bottom:1px solid orange;">
+						<tr style="height:50px;">
+							<td rowspan=4 width=100 ><img src="/displayRoom?fileName=${cvo.r_image }" width=100 height=80/></td>
+							<td width=213 style="padding-left:10px; padding-top:10px;"><span style="font-size:18px; font-weight:bold;">${cvo.c_name }</span></td>
+						</tr>
+						<tr>
+							<td style="padding-left:10px;"><span>${cvo.r_title }</span><span style="font-size:13px;">(<span>${cvo.r_roomnum }</span>호)</span></td>
+						<tr>
+						<tr style="height:50px;">
+							<td style="padding-left:10px; padding-bottom:10px;"><span style="display:inline-block; text-align:right; padding-left:100px; padding-right:5px; font-size:20px;">${cvo.r_price }</span>원</td>
+						</tr>
+					</table>
+	           	</c:forEach>
+	            <input type="button" value="결제하기" style="width:100%; height:40px; background:#efefef; outline:none; border:none; cursor:pointer;
+	            border-radius:5px; position:absolute; bottom:10px;">
+			</div>
 		</div>
-		
 	</aside>
 	
 <!-- 	마이페이지 -->
