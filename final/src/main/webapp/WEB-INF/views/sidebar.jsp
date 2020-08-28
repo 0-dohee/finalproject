@@ -169,12 +169,15 @@
 						<tr style="height:50px;">
 							<td rowspan=4 width=100 ><img src="/displayRoom?fileName=${cvo.r_image }" width=100 height=80/></td>
 							<td width=213 style="padding-left:10px; padding-top:10px;"><span style="font-size:18px; font-weight:bold;">${cvo.c_name }</span></td>
+							<td>
+								<img r_id="${cvo.r_id }" r_roomnum="${cvo.r_roomnum }" class="cartcancel" src="/resources/img/hotplace/close_icon2.png" width=10/>
+							</td>
 						</tr>
 						<tr>
-							<td style="padding-left:10px;"><span>${cvo.r_title }</span><span style="font-size:13px;">(<span>${cvo.r_roomnum }</span>호)</span></td>
+							<td colspan=2 style="padding-left:10px;"><span>${cvo.r_title }</span><span style="font-size:13px;">(<span>${cvo.r_roomnum }</span>호)</span></td>
 						<tr>
 						<tr style="height:50px;">
-							<td style="padding-left:10px; padding-bottom:10px;"><span style="display:inline-block; text-align:right; padding-left:100px; padding-right:5px; font-size:20px;">${cvo.r_price }</span>원</td>
+							<td colspan=2 style="padding-left:10px; padding-bottom:10px;"><span style="display:inline-block; text-align:right; padding-left:100px; padding-right:5px; font-size:20px;">${cvo.r_price }</span>원</td>
 						</tr>
 					</table>
 	           	</c:forEach>
@@ -206,6 +209,17 @@
 	</aside>
 </body>
 <script>
+	
+	
+	// 장바구니 담았을때 카트div만 새로고침하기
+	function refresh(){  
+	      $(".sidebar-content").load(window.location.href + " .sidebar-content");
+	}
+	
+	
+	
+	
+	
 	// mypage
 	$(function(){
 		var duration = 300;

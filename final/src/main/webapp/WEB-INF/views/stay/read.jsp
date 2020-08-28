@@ -345,10 +345,26 @@ $(":checkbox").css("display","none");
 $("#darken-background").hide();
 $("input:checkbox[name='r_o_option1']").prop("checked", false);
 
-// 장바구니
+	//카트 빼기
+	$(".cartcancel").on("click",function(){
+		var r_roomnum = $(this).attr("r_roomnum");
+		var r_id = $(this).attr("r_id");
+		
+		$.ajax({
+			type:"get",
+			url:"/cartcancel",
+			data:{"r_id":r_id,"r_roomnum":r_roomnum},
+			success:function(){
+				alert("서어공");
+			}
+		});
+	});
+
+
+	// 장바구니
 	$("#tbl1").on("click", ".row .cart", function(e) {
 		e.stopPropagation();
-		if (!confirm("장바구니에 담으시겠습니까??"))return;
+		
 		var row = $(this).parent().parent();
 		var c_name = $("#tbl .row").find(".c_name").html();
 		var r_title = row.find(".r_title").html();
@@ -357,10 +373,11 @@ $("input:checkbox[name='r_o_option1']").prop("checked", false);
 		var r_id = row.find(".r_id").val();
 		var r_image = row.find(".r_image").val();
 		//alert(c_name);
-		alert(r_id + c_name + r_title + r_roomnum + r_price + r_image);
+// 		alert(r_id + c_name + r_title + r_roomnum + r_price + r_image);
 		$.ajax({
 			type : "get",
 			url : "/sidebar",
+			dataType:"json",
 			data : {
 				"r_id" : r_id,
 				"c_name" : c_name,
@@ -369,8 +386,23 @@ $("input:checkbox[name='r_o_option1']").prop("checked", false);
 				"r_price" : r_price,
 				"r_image" : r_image
 			},
-			success : function() {
-				
+			success : function(data) {
+				if(data==1){
+					if($(".sidebar").hasClass('open')){
+						refresh();
+					}else{
+						refresh();
+						$(".sidebar-btn").click();
+					}
+					alert("이미 장바구니에 있는 품목입니다");
+				}else{
+					if($(".sidebar").hasClass('open')){
+						refresh();
+					}else{
+						refresh();
+						$(".sidebar-btn").click();
+					}
+				}
 			}
 		});
 	});

@@ -521,10 +521,7 @@
 					test.c_id = data[i].c_id;
 					positions.push(test);
 				}
-				var no = 0;
 				for (var i = 0; i < positions.length; i++) {
-					no = i;
-					alert(no);
 					// 마커를 생성합니다
 						var marker = new kakao.maps.Marker({
 						map : map, // 마커를 표시할 지도
@@ -534,9 +531,11 @@
 
 					// 마커에 표시할 인포윈도우를 생성합니다 
 					var infowindow = new kakao.maps.InfoWindow({
-						content : positions[i].content
 					// 인포윈도우에 표시할 내용
+						content : positions[i].content
 					});
+					
+					
 
 					// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
 					// 이벤트 리스너로는 클로저를 만들어 등록합니다 
@@ -547,30 +546,31 @@
 							makeOutListener(infowindow));
 					
 					// 마커에 클릭이벤트를 등록합니다
-					kakao.maps.event.addListener(marker, 'click', function() {
-					      // 마커 위에 인포윈도우를 표시합니다
-						location.href = "/stay/read?c_id=" + positions[no].c_id;
-					});
-					
-					
-					// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-					function makeOverListener(map, marker, infowindow) {
-						return function() {
-							infowindow.open(map, marker);
-						};
-					}
-
-					// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-					function makeOutListener(infowindow) {
-						return function() {
-							infowindow.close();
-						};
-					}
+					kakao.maps.event.addListener(marker, 'click', makeClick(
+							positions[i].c_id));
 					
 				}
 				
+				// 마커클릭이벤트 등록
+				function makeClick(c_id){
+					return function(){
+						location.href = "/stay/read?c_id=" + c_id;
+					}
+				}
 				
+				// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+				function makeOverListener(map, marker, infowindow) {
+					return function() {
+						infowindow.open(map, marker);
+					};
+				}
 
+				// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+				function makeOutListener(infowindow) {
+					return function() {
+						infowindow.close();
+					};
+				}
 				
 			}
 		});
