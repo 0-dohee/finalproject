@@ -347,6 +347,7 @@ $("input:checkbox[name='r_o_option1']").prop("checked", false);
 
 	//카트 빼기
 	$(".cartcancel").on("click",function(){
+		alert("dd");
 		var r_roomnum = $(this).attr("r_roomnum");
 		var r_id = $(this).attr("r_id");
 		

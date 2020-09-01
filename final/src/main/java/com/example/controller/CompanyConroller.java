@@ -74,12 +74,9 @@ public class CompanyConroller {
 	   ArrayList<CompanyVO> listCart=(ArrayList<CompanyVO>)session.getAttribute("listCart");
 		for(CompanyVO nvo:listCart) {
 			if(nvo.getR_id().equals(vo.getR_id()) && nvo.getR_roomnum().equals(vo.getR_roomnum())) {
-				System.out.println(nvo.getR_id() + nvo.getR_roomnum());
-				session.removeAttribute(nvo.getR_id());
-				session.removeAttribute(nvo.getR_roomnum());
-				session.removeAttribute(nvo.getR_image());
-				session.removeAttribute(nvo.getC_name());
-				session.removeAttribute(nvo.getR_title());
+				session.removeAttribute("listCart");
+				listCart.remove(nvo);
+				session.setAttribute("listCart", listCart);
 			}
 		}
    }

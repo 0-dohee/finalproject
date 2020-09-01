@@ -152,6 +152,16 @@
 	margin-top: 10px;
 }
 
+#div_cart {
+	height:750px;
+	overflow-y:auto; 
+	overflow-x:hidden; 
+}
+
+#div_cart::-webkit-scrollbar { 
+    display: none; 
+}
+
 </style>
 </head>
 <body>
@@ -164,23 +174,25 @@
 			<h1>CART</h1>
 			<div style="margin-top:60px; width:313px; margin-left:10px; border-top:3px solid gray; 
 				border-bottom:3px solid gray; padding-top:20px; padding-bottom:20px; position:relative; height:850px;">
-				<c:forEach items="${listCart }" var="cvo">
-					<table style="border-bottom:1px solid orange;">
-						<tr style="height:50px;">
-							<td rowspan=4 width=100 ><img src="/displayRoom?fileName=${cvo.r_image }" width=100 height=80/></td>
-							<td width=213 style="padding-left:10px; padding-top:10px;"><span style="font-size:18px; font-weight:bold;">${cvo.c_name }</span></td>
-							<td>
-								<img r_id="${cvo.r_id }" r_roomnum="${cvo.r_roomnum }" class="cartcancel" src="/resources/img/hotplace/close_icon2.png" width=10/>
-							</td>
-						</tr>
-						<tr>
-							<td colspan=2 style="padding-left:10px;"><span>${cvo.r_title }</span><span style="font-size:13px;">(<span>${cvo.r_roomnum }</span>호)</span></td>
-						<tr>
-						<tr style="height:50px;">
-							<td colspan=2 style="padding-left:10px; padding-bottom:10px;"><span style="display:inline-block; text-align:right; padding-left:100px; padding-right:5px; font-size:20px;">${cvo.r_price }</span>원</td>
-						</tr>
-					</table>
-	           	</c:forEach>
+				<div id="div_cart">
+					<c:forEach items="${listCart }" var="cvo">
+						<table style="border-bottom:1px solid orange;">
+							<tr style="height:50px;">
+								<td rowspan=4 width=100 ><img src="/displayRoom?fileName=${cvo.r_image }" width=100 height=80/></td>
+								<td width=213 style="padding-left:10px; padding-top:10px;"><span style="font-size:18px; font-weight:bold;">${cvo.c_name }</span></td>
+								<td>
+									<img r_id="${cvo.r_id }" r_roomnum="${cvo.r_roomnum }" class="cartcancel" src="/resources/img/hotplace/close_icon2.png" width=10/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan=2 style="padding-left:10px;"><span>${cvo.r_title }</span><span style="font-size:13px;">(<span>${cvo.r_roomnum }</span>호)</span></td>
+							<tr>
+							<tr style="height:50px;">
+								<td colspan=2 style="padding-left:10px; padding-bottom:10px;"><span style="display:inline-block; text-align:right; padding-left:100px; padding-right:5px; font-size:20px;">${cvo.r_price }</span>원</td>
+							</tr>
+						</table>
+		           	</c:forEach>
+				</div>
 	            <input type="button" value="결제하기" style="width:100%; height:40px; background:#efefef; outline:none; border:none; cursor:pointer;
 	            border-radius:5px; position:absolute; bottom:10px;">
 			</div>
@@ -215,9 +227,6 @@
 	function refresh(){  
 	      $(".sidebar-content").load(window.location.href + " .sidebar-content");
 	}
-	
-	
-	
 	
 	
 	// mypage
