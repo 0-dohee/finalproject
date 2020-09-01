@@ -44,10 +44,9 @@ public class CompanyConroller {
 		
    @RequestMapping("/sidebar")
    @ResponseBody
-   public void cart(HttpSession session,CompanyVO vo) {
-	   System.out.println("sidebar"+vo.toString());
+   public int cart(HttpSession session,CompanyVO vo) {
+	   int cnt=0;
 	   ArrayList<CompanyVO> listCart=(ArrayList<CompanyVO>)session.getAttribute("listCart");
-	   System.out.println(listCart);
 		if(listCart==null) {
 			listCart=new ArrayList<CompanyVO>();
 			listCart.add(vo);
@@ -57,6 +56,7 @@ public class CompanyConroller {
 			for(CompanyVO nvo:listCart) {
 				if(nvo.getR_id().equals(vo.getR_id()) && nvo.getR_roomnum().equals(vo.getR_roomnum())) {
 					find=true;
+					cnt=1;
 				}
 			}
 			if(find==false) {
@@ -64,7 +64,27 @@ public class CompanyConroller {
 			}
 		}
 		session.setAttribute("listCart", listCart);
+		return cnt;
    }
+   
+   @RequestMapping("/cartcancel")
+   @ResponseBody
+   public void cartcancel(HttpSession session,CompanyVO vo) {
+	   System.out.println(vo.toString());
+	   ArrayList<CompanyVO> listCart=(ArrayList<CompanyVO>)session.getAttribute("listCart");
+		for(CompanyVO nvo:listCart) {
+			if(nvo.getR_id().equals(vo.getR_id()) && nvo.getR_roomnum().equals(vo.getR_roomnum())) {
+				System.out.println(nvo.getR_id() + nvo.getR_roomnum());
+				session.removeAttribute(nvo.getR_id());
+				session.removeAttribute(nvo.getR_roomnum());
+				session.removeAttribute(nvo.getR_image());
+				session.removeAttribute(nvo.getC_name());
+				session.removeAttribute(nvo.getR_title());
+			}
+		}
+   }
+   
+   
 	
 	@RequestMapping("/company/getroomread")
 	@ResponseBody
