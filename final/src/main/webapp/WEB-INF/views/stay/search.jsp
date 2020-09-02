@@ -225,10 +225,10 @@ table {
 							<span style="font-size:13px; color:gray; ">${vo.c_address }</span>
 						</td>
 					</tr>
-					<tr class="row">
+					<tr>
 						<td style="text-align:right; padding-right:10px; padding-top:20px; border-bottom:0.5px solid #e9e9e9;">
-						최저가 <span style="font-size:25px; font-weight:bold; color:#0f4c81;"><fmt:formatNumber value="${vo.r}" pattern="#,###"/> ~</span><br>
-						<button class="btnSee">보러가기</button>
+							최저가 <span style="font-size:25px; font-weight:bold; color:#0f4c81;"><fmt:formatNumber value="${vo.r}" pattern="#,###"/> ~</span><br>
+							<button class="btnSee">보러가기</button>
 						</td>
 					</tr>
 				</c:forEach>
@@ -274,9 +274,8 @@ table {
 	});
 	
 	// 보러가기 버튼
-	$("#companylist").on("click .row .btnSee", function(){
-		var c_id = $(this).parent().find(".c_id").html();
-		alert(c_id);
+	$("#companylist").on("click", ".btnSee", function(){
+		var c_id = $(this).parent().parent().prev().find(".c_id").html();
 		location.href = "/stay/read?c_id=" + c_id;
 	});
 	
@@ -380,8 +379,8 @@ table {
 		location.href = "/stay/search?page=" + page;
 	});
 	//호텔읽기 
-	$("#companylist").on("click", ".row", function() {
-		var c_id = $(this).find(".c_id").html();
+	$("#companylist").on("click", ".row #image", function() {
+		var c_id = $(this).parent().parent().find(".c_id").html();
 		location.href = "/stay/read?c_id=" + c_id;
 	});
 </script>

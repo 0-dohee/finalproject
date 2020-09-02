@@ -169,7 +169,7 @@
 	<button class="sidebar-btn">
 		<img src="/resources/img/cart.png" width=45>
 	</button>
-	<aside class="sidebar">
+	<aside id="cart" class="sidebar">
 		<div class="sidebar-content">
 			<h1>CART</h1>
 			<div style="margin-top:60px; width:313px; margin-left:10px; border-top:3px solid gray; 

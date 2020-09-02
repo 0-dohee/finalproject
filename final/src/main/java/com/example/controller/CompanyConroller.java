@@ -70,15 +70,16 @@ public class CompanyConroller {
    @RequestMapping("/cartcancel")
    @ResponseBody
    public void cartcancel(HttpSession session,CompanyVO vo) {
-	   System.out.println(vo.toString());
 	   ArrayList<CompanyVO> listCart=(ArrayList<CompanyVO>)session.getAttribute("listCart");
+	   CompanyVO cvo=new CompanyVO();
 		for(CompanyVO nvo:listCart) {
 			if(nvo.getR_id().equals(vo.getR_id()) && nvo.getR_roomnum().equals(vo.getR_roomnum())) {
+				cvo = nvo;
 				session.removeAttribute("listCart");
-				listCart.remove(nvo);
-				session.setAttribute("listCart", listCart);
 			}
 		}
+		listCart.remove(cvo);
+		session.setAttribute("listCart", listCart);
    }
    
    

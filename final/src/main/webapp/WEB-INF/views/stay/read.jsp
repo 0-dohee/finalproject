@@ -346,8 +346,8 @@ $("#darken-background").hide();
 $("input:checkbox[name='r_o_option1']").prop("checked", false);
 
 	//카트 빼기
-	$(".cartcancel").on("click",function(){
-		alert("dd");
+	$("#cart").on("click",".cartcancel",function(){
+		if(!confirm("정말로 삭제하시겠습니까?"))return;
 		var r_roomnum = $(this).attr("r_roomnum");
 		var r_id = $(this).attr("r_id");
 		
@@ -356,7 +356,7 @@ $("input:checkbox[name='r_o_option1']").prop("checked", false);
 			url:"/cartcancel",
 			data:{"r_id":r_id,"r_roomnum":r_roomnum},
 			success:function(){
-				alert("서어공");
+				refresh();
 			}
 		});
 	});
@@ -388,20 +388,37 @@ $("input:checkbox[name='r_o_option1']").prop("checked", false);
 				"r_image" : r_image
 			},
 			success : function(data) {
+				var duration = 300;
+				var $sidebar1 = $('.sidebar-mypage');
+				var $sidebar = $('.sidebar');
 				if(data==1){
 					if($(".sidebar").hasClass('open')){
+						alert("이미 장바구니에 있는 품목입니다");
 						refresh();
 					}else{
+						alert("이미 장바구니에 있는 품목입니다");
+						$sidebar.stop(true).animate({
+							right : '-70px'
+						}, duration, 'easeOutBack');
+						$sidebar1.stop(true).animate({
+							right : '-400px'
+						}, duration, 'easeInBack');
+						$(".menu-trigger").removeClass("active");
 						refresh();
-						$(".sidebar-btn").click();
 					}
-					alert("이미 장바구니에 있는 품목입니다");
 				}else{
 					if($(".sidebar").hasClass('open')){
 						refresh();
 					}else{
+						$sidebar.stop(true).animate({
+							right : '-70px'
+						}, duration, 'easeOutBack');
+						$sidebar1.stop(true).animate({
+							right : '-400px'
+						}, duration, 'easeInBack');
+						$(".menu-trigger").removeClass("active");
 						refresh();
-						$(".sidebar-btn").click();
+						
 					}
 				}
 			}
