@@ -394,7 +394,6 @@ $("input:checkbox[name='r_o_option1']").prop("checked", false);
 				if(data==1){
 					if($(".sidebar").hasClass('open')){
 						alert("이미 장바구니에 있는 품목입니다");
-						refresh();
 					}else{
 						alert("이미 장바구니에 있는 품목입니다");
 						$sidebar.stop(true).animate({
@@ -404,7 +403,6 @@ $("input:checkbox[name='r_o_option1']").prop("checked", false);
 							right : '-400px'
 						}, duration, 'easeInBack');
 						$(".menu-trigger").removeClass("active");
-						refresh();
 					}
 				}else{
 					if($(".sidebar").hasClass('open')){
