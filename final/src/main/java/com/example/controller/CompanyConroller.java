@@ -183,7 +183,7 @@ public class CompanyConroller {
 		
 		@RequestMapping("/stay/read")
 		public void hotelread(Model model,String c_id) {
-			model.addAttribute("c_id",c_id);
+			model.addAttribute("company_id",c_id);
 		}
 		
 	   @RequestMapping("/company/companyread")

@@ -87,10 +87,11 @@ public class UserVO {
 	}
 	@Override
 	public String toString() {
-		return "UserVO [u_id=" + u_id + ", u_pass=" + u_pass + ", u_name=" + u_name + ", u_tel=" + u_tel
-				+ ", u_address=" + u_address + ", u_email=" + u_email + ", u_image=" + u_image + ", u_status="
-				+ u_status + ", u_birthday=" + u_birthday + ", u_key=" + u_key + "]";
+		return "UserVO [u_id=" + u_id + ", u_k_id=" + u_k_id + ", u_pass=" + u_pass + ", u_name=" + u_name + ", u_tel="
+				+ u_tel + ", u_address=" + u_address + ", u_email=" + u_email + ", u_image=" + u_image + ", u_status="
+				+ u_status + ", u_birthday=" + u_birthday + ", u_key=" + u_key + ", u_gender=" + u_gender + "]";
 	}
+	
 	
 	
 }

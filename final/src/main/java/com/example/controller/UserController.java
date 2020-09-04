@@ -213,15 +213,15 @@ public class UserController {
 	//유저 정보 수정
 	@RequestMapping(value="/user/mypage/updateUser",method=RequestMethod.POST)
 	public String update(UserVO vo,MultipartHttpServletRequest multi,HttpServletRequest request)throws Exception {
-		System.out.println("aaa");
 		String[] arrayParam = request.getParameterValues("t_tag");
-		System.out.println(vo.toString());
 		MultipartFile file=multi.getFile("file");
 		UserVO vo1=mapper.read(vo.getU_id(),vo.getU_k_id());
+		System.out.println(file);
 		if(!file.isEmpty()) {
 			UserVO vo2=mapper.kakaoread(vo.getU_id(),vo.getU_k_id());
 			//옛날 대표이미지 삭제
-			if(!vo2.getU_image().equals("")) {
+			System.out.println(vo2.getU_image());
+			if(vo2.getU_image()!=null) {
 				new File(path+File.separator+vo2.getU_image()).delete();
 			}
 			String image=System.currentTimeMillis()+file.getOriginalFilename();
@@ -229,28 +229,23 @@ public class UserController {
 			vo.setU_image(image);
 			if(vo.getU_pass().equals("")) {
 				vo.setU_pass(vo1.getU_pass());
-				
-				System.out.println(vo.getU_pass());
 				mapper.updateUser(vo);
 			}else {
 				mapper.updateUser(vo);
 			}
 			mapper.deleteTag(vo.getU_id(),vo.getU_k_id());
 			for (int i = 0; i < arrayParam.length; i++) { 
-				System.out.println(arrayParam[i]); 
 				mapper.insertUsertag(vo.getU_id(),"0",arrayParam[i]);
 				}
 		}else {
 			if(vo.getU_pass().equals("")) {
 				vo.setU_pass(vo1.getU_pass());
-				System.out.println(vo.getU_pass());
 				mapper.updateUser2(vo);
 			}else {
 				mapper.updateUser2(vo);
 			}
 			mapper.deleteTag(vo.getU_id(),vo.getU_k_id());
-			for (int i = 0; i < arrayParam.length; i++) { 
-				System.out.println(arrayParam[i]); 
+			for (int i = 0; i < arrayParam.length; i++) {
 				mapper.insertUsertag(vo.getU_id(),"0",arrayParam[i]);
 				}
 		}
@@ -309,7 +304,6 @@ public class UserController {
 	@ResponseBody
 	public int nameCheckC(String name, String number) {
 			int i=mapper.checkNameCompany(number, name);
-			System.out.println(i);
 			int result=0;
 			if(i==1) {
 				result=1;
@@ -513,9 +507,7 @@ public class UserController {
 		@ResponseBody
 		public int companyidCheck(String c_id) {
 			int result=0;	
-
 			String readid=mapper.readcompanyid(c_id);
-			System.out.println(readid);
 			if(readid.equals("1")) {
 				CompanyVO vo=mapper.readCompany(c_id);
 				System.out.println(vo.getC_key());
@@ -533,10 +525,8 @@ public class UserController {
 		@RequestMapping("/user/companyNumberCheck")
 		@ResponseBody
 		public int companyNumberCheck(String c_number) {
-			System.out.println(c_number);
 			int result=0;	
 			String readNumber=mapper.readcompanyNumber(c_number);
-			System.out.println(readNumber);
 			if(readNumber!=null) {
 				result=1;
 			}
@@ -667,7 +657,6 @@ public class UserController {
 			vo.setU_key("N");
 			mapper.insert(vo);
 			for (int i = 0; i < arrayParam.length; i++) { 
-				System.out.println(arrayParam[i]); 
 				mapper.insertUsertag(vo.getU_id(),"0",arrayParam[i]);
 				}
 			mailSender.mailSendWithUserKey(vo.getU_email(), vo.getU_id(), request);
@@ -699,7 +688,6 @@ public class UserController {
 				vo.setC_key("N");
 				mapper.insertCompany(vo);
 				for (int i = 0; i < arrayParam.length; i++) { 
-					System.out.println(arrayParam[i]); 
 					mapper.insertCompanyoption(vo.getC_id(), arrayParam[i]);
 					}
 				mailSender.mailSendWithCompanyKey(vo.getC_email(), vo.getC_id(), request);
@@ -714,8 +702,7 @@ public class UserController {
 				}
 				vo.setC_key("N");
 				mapper.insertCompany(vo);
-				for (int i = 0; i < arrayParam.length; i++) { 
-					System.out.println(arrayParam[i]); 
+				for (int i = 0; i < arrayParam.length; i++) {
 					mapper.insertCompanyoption(vo.getC_id(), arrayParam[i]);
 					}
 				mailSender.mailSendWithCompanyKey(vo.getC_email(), vo.getC_id(), request);
