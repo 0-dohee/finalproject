@@ -208,12 +208,12 @@
 	<aside class="sidebar-mypage">
 		<div class="sidebar-mypage-content">
 			<h1>MYPAGE</h1>
-			<c:if test="${c_id==null && u_id=='0'}">
+			<c:if test="${c_id==null && u_id!=null || c_id==null && u_id==null}">
 				<div id="mypage_info"><a href="/user/mypage/infomation">내 정보</a></div>
 				<div id="mypage_booking"><a href="/air/bookinglist">예약내역</a></div>
 				<div id="mypage_like"><a href="/hotplace/likelist">찜목록</a></div>
 			</c:if>
-			<c:if test="${ c_id!=null }">
+			<c:if test="${c_id!=null && u_id==null }">
 				<div id="mypage_info"><a href="/user/mypage/infomation">내 정보</a></div>
 				<div id="mypage_booking"><a href="/company/roominsert?c_id=${c_id}">객실등록</a></div>
 			</c:if>
